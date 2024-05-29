@@ -5,11 +5,22 @@ const listeMots = ['Cachalot', 'Pétunia', 'Serviette']
 // Déclaration du tableau contenant une liste avec des phrases proposées à l'utilisateur
 const listePhrases = ["Pas de panique !", "La vie, l’univers et le reste", "Merci pour le poisson"]
 
-let choix = prompt('Veuillez choisir "mots" ou "phrases" :')
-while (choix !== "mots" && choix !== "phrases") {
+
+//Fonction choisirPhrasesOuMots
+function choisirPhrasesOuMots() {
+    let choix = prompt('Veuillez choisir "mots" ou "phrases" :')
+    while (choix !== "mots" && choix !== "phrases") {
     choix = prompt('Veuillez choisir "mots" ou "phrases" :')
+    }
+    return choix
 }
 
+
+
+// Fonction lancerBoucleDeJeu
+function lancerBoucleDeJeu(choix) {
+    return score
+}
 if (choix === "mots") {
     for (let i = 0; i < listeMots.length; i++) {
         // Déclaration de la variable contenant le mot saisi par l'utilisateur
@@ -20,7 +31,7 @@ if (choix === "mots") {
             score++
         }
     }
-    // Affichage du score de l'utilisateur
+    // Affichage du score de l'utilisateur => Fonction afficherResultat
     console.log("Votre score est de " + score + " sur " + listeMots.length)
 } else {
     for (let i = 0; i < listePhrases.length; i++) {
@@ -32,6 +43,13 @@ if (choix === "mots") {
             score++
         }
     } 
-    // Affichage du score de l'utilisateur
+    // Affichage du score de l'utilisateur => Fonction afficherResultat
     console.log("Votre score est de " + score + " sur " + listePhrases.length)
+}
+
+//Fonction lancerJeu
+function lancerJeu() {
+    //Appel de choisirPhrasesOuMots 
+    //Appel de lancerBoucleDeJeu
+    //Appel de afficherResultat
 }
