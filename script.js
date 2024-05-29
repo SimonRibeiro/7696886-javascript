@@ -15,41 +15,49 @@ function choisirPhrasesOuMots() {
     return choix
 }
 
-
-
 // Fonction lancerBoucleDeJeu
-function lancerBoucleDeJeu(choix) {
+function lancerBoucleDeJeu(liste) {
+    if (liste === "mots") {
+        for (let i = 0; i < listeMots.length; i++) {
+            // Déclaration de la variable contenant le mot saisi par l'utilisateur
+            // Le prompt sert à afficher une popup demandant à l'utilisateur de saisir un mot
+            let motUtilisateur = prompt('Entrez le mot : ' + listeMots[i])
+            // Vérification du mot saisi par l'utilisateur : on vérifie qu'il correspond au premier mot du tableau "listeMots"
+            if (motUtilisateur === listeMots[i]) {
+                score++
+            }
+        }
+    } else {
+        for (let i = 0; i < listePhrases.length; i++) {
+            // Déclaration de la variable contenant la phrase saisie par l'utilisateur
+            // Le prompt sert à afficher une popup demandant à l'utilisateur de saisir une phrase
+            let phraseUtilisateur = prompt('Entrez la phrase : ' + listePhrases[i])
+            // Vérification du mot saisi par l'utilisateur : on vérifie qu'il correspond a la premiere phrase du tableau "listePhrases"
+            if (phraseUtilisateur === listePhrases[i]) {
+                score++
+            }
+        } 
+    }
     return score
 }
-if (choix === "mots") {
-    for (let i = 0; i < listeMots.length; i++) {
-        // Déclaration de la variable contenant le mot saisi par l'utilisateur
-        // Le prompt sert à afficher une popup demandant à l'utilisateur de saisir un mot
-        let motUtilisateur = prompt('Entrez le mot : ' + listeMots[i])
-        // Vérification du mot saisi par l'utilisateur : on vérifie qu'il correspond au premier mot du tableau "listeMots"
-        if (motUtilisateur === listeMots[i]) {
-            score++
-        }
+
+//Fonction afficherResultat
+function afficherResultat(score, choix) {
+    if (choix === "mots") {
+        console.log("Votre score est de " + score + " sur " + listeMots.length)
+    } else {
+        console.log("Votre score est de " + score + " sur " + listePhrases.length)
     }
-    // Affichage du score de l'utilisateur => Fonction afficherResultat
-    console.log("Votre score est de " + score + " sur " + listeMots.length)
-} else {
-    for (let i = 0; i < listePhrases.length; i++) {
-        // Déclaration de la variable contenant la phrase saisie par l'utilisateur
-        // Le prompt sert à afficher une popup demandant à l'utilisateur de saisir une phrase
-        let phraseUtilisateur = prompt('Entrez la phrase : ' + listePhrases[i])
-        // Vérification du mot saisi par l'utilisateur : on vérifie qu'il correspond a la premiere phrase du tableau "listePhrases"
-        if (phraseUtilisateur === listePhrases[i]) {
-            score++
-        }
-    } 
-    // Affichage du score de l'utilisateur => Fonction afficherResultat
-    console.log("Votre score est de " + score + " sur " + listePhrases.length)
 }
 
 //Fonction lancerJeu
 function lancerJeu() {
     //Appel de choisirPhrasesOuMots 
-    //Appel de lancerBoucleDeJeu
+    let liste = choisirPhrasesOuMots()
+    //Appel de lancerBoucleDeJe
+    lancerBoucleDeJeu(liste)
     //Appel de afficherResultat
+    afficherResultat(score, liste)
+    return
 }
+lancerJeu()
