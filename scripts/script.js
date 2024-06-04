@@ -34,7 +34,14 @@ function lancerJeu() {
 
     let btnValiderMot = document.getElementById("btnValiderMot")
     btnValiderMot.addEventListener("click", () => {
+        let inputEcriture = document.getElementById("inputEcriture")
+        if (inputEcriture.value === listeMots[i]) {
+            score++
+        }
+        afficherResultat(score, nbMotsProposes)
+        nbMotsProposes++
         i++
+
         let zoneProposition = document.querySelector(".zoneProposition")
         if (listeMots[i] === undefined) {
             zoneProposition.textContent = `Le jeu est fini`
@@ -42,12 +49,7 @@ function lancerJeu() {
         } else {
         afficherProposition(listeMots,[i])
         }
-        let inputEcriture = document.getElementById("inputEcriture")
-        if (inputEcriture.value === zoneProposition.textContent) {
-            score++
-        }
-        afficherResultat(score, nbMotsProposes)
-        nbMotsProposes++
+
         inputEcriture.value = null
     })
 }
