@@ -14,16 +14,27 @@ function afficherProposition(listePropositions,[i]) {
  * @param {string} email : l'email de la personne avec qui il veut partager son score
  * @param {string} score : le score. 
  */
-function afficherEmail(nom, email, score) {
-    let mailto = `mailto:${email}?subject=Partage du score Azertype&body=Salut, je suis ${nom} et je viens de réaliser le score ${score} sur le site d'Azertype !`
+function afficherEmail(nom, email, scoreMail) {
+    let mailto = `mailto:${email}?subject=Partage du score Azertype&body=Salut, je suis ${nom} et je viens de réaliser le score ${scoreMail} sur le site d'Azertype !`
     location.href = mailto
 }
 
 function lancerJeu() {
     let score = 0
     let nbPropositionsProposes = 1
+
     initAddEventListenerPopup()
-    
+    let btnEnvoyerMail = document.querySelector(".popup form")
+    btnEnvoyerMail.addEventListener("submit", (event) => {
+        event.preventDefault()
+        let baliseNom = document.getElementById("nom")
+        let nom = baliseNom.value
+        let baliseEmail = document.getElementById("email")
+        let email = baliseEmail.value
+        let scoreMail = `${score} / ${nbPropositionsProposes}`
+        afficherEmail(nom, email, scoreMail)
+    })
+
     let listePropositions = listeMots
     let i = 0
     afficherProposition(listePropositions,[i])
