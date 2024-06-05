@@ -1,55 +1,91 @@
-/*********************************************************************************
- * 
- * Ce fichier contient toutes les fonctions nécessaires au fonctionnement du jeu. 
- * 
- *********************************************************************************/
-
-/**
- * Cette fonction affiche dans la console le score de l'utilisateur
- * @param {number} score : le score de l'utilisateur
- * @param {number} nbMotsProposes : le nombre de mots proposés à l'utilisateur
- */
-function afficherResultat(score, nbMotsProposes) {
-    let resultat = document.querySelector(".zoneScore span")
-    resultat.textContent = `${score} / ${nbMotsProposes}`
+let resultat = document.querySelector(".zoneScore span")
+function afficherResultat(score, nbPropositionsProposes) {
+    resultat.textContent = `${score} / ${nbPropositionsProposes}`
 }
 
-
-function afficherProposition(listeMots,[i]) {
+function afficherProposition(listePropositions,[i]) {
     let zoneProposition = document.querySelector(".zoneProposition")
-    zoneProposition.textContent = `${listeMots[i]}`
+    zoneProposition.textContent = `${listePropositions[i]}`
 }
 
-/**
- * Cette fonction lance le jeu. 
- * Elle demande à l'utilisateur de choisir entre "mots" et "phrases" et lance la boucle de jeu correspondante
- */
 function lancerJeu() {
-    // Initialisations
     let score = 0
-    let nbMotsProposes = 1
+    let nbPropositionsProposes = 1
 
+    let listePropositions = listeMots
     let i = 0
-    afficherProposition(listeMots,[i])
+    afficherProposition(listePropositions,[i])
 
+    let mots = document.getElementById("mots")
+    let phrases = document.getElementById("phrases")
+
+    mots.addEventListener("change", () => {
+        if (mots.checked === true) {
+            listePropositions = listeMots
+        }
+        i = 0
+        afficherProposition(listePropositions,[i])
+        score = 0
+        nbPropositionsProposes = 1
+        resultat.textContent = `0`
+        btnValiderMot.disabled = false
+        inputEcriture.disabled = false
+        inputEcriture.value = null
+    })
+    
+    phrases.addEventListener("change", () => {
+        if (phrases.checked === true) {
+            listePropositions = listePhrases
+        }
+        i = 0
+        afficherProposition(listePropositions,[i])
+        score = 0
+        nbPropositionsProposes = 1
+        resultat.textContent = `0`
+        btnValiderMot.disabled = false
+        inputEcriture.disabled = false
+        inputEcriture.value = null
+    })
+
+    let zoneProposition = document.querySelector(".zoneProposition")
     let btnValiderMot = document.getElementById("btnValiderMot")
+    let inputEcriture = document.getElementById("inputEcriture")
+
     btnValiderMot.addEventListener("click", () => {
-        let inputEcriture = document.getElementById("inputEcriture")
-        if (inputEcriture.value === listeMots[i]) {
+        if (inputEcriture.value === listePropositions[i]) {
             score++
         }
-        afficherResultat(score, nbMotsProposes)
-        nbMotsProposes++
+        afficherResultat(score, nbPropositionsProposes)
+        nbPropositionsProposes++
         i++
 
-        let zoneProposition = document.querySelector(".zoneProposition")
-        if (listeMots[i] === undefined) {
+        if (listePropositions[i] === undefined) {
             zoneProposition.textContent = `Le jeu est fini`
             btnValiderMot.disabled = true
+            inputEcriture.disabled = true
         } else {
-        afficherProposition(listeMots,[i])
+        afficherProposition(listePropositions,[i])
         }
-
         inputEcriture.value = null
+    })
+
+    inputEcriture.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            if (inputEcriture.value === listePropositions[i]) {
+                score++
+            }
+            afficherResultat(score, nbPropositionsProposes)
+            nbPropositionsProposes++
+            i++
+    
+            if (listePropositions[i] === undefined) {
+                zoneProposition.textContent = `Le jeu est fini`
+                btnValiderMot.disabled = true
+                inputEcriture.disabled = true
+            } else {
+            afficherProposition(listePropositions,[i])
+            }
+            inputEcriture.value = null
+        }
     })
 }
