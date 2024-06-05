@@ -16,36 +16,24 @@ function lancerJeu() {
     let i = 0
     afficherProposition(listePropositions,[i])
 
-    let mots = document.getElementById("mots")
-    let phrases = document.getElementById("phrases")
-
-    mots.addEventListener("change", () => {
-        if (mots.checked === true) {
-            listePropositions = listeMots
-        }
-        i = 0
-        afficherProposition(listePropositions,[i])
-        score = 0
-        nbPropositionsProposes = 1
-        resultat.textContent = `0`
-        btnValiderMot.disabled = false
-        inputEcriture.disabled = false
-        inputEcriture.value = null
-    })
-    
-    phrases.addEventListener("change", () => {
-        if (phrases.checked === true) {
-            listePropositions = listePhrases
-        }
-        i = 0
-        afficherProposition(listePropositions,[i])
-        score = 0
-        nbPropositionsProposes = 1
-        resultat.textContent = `0`
-        btnValiderMot.disabled = false
-        inputEcriture.disabled = false
-        inputEcriture.value = null
-    })
+    let optionSource = document.querySelectorAll('input[name="optionSource"]')
+    for (let j = 0; j < optionSource.length; j++) {
+        optionSource[j].addEventListener("change", (event) => {
+            if (event.target.value === "2") {
+                listePropositions = listePhrases
+            } else {
+                listePropositions = listeMots
+            }
+                i = 0
+                afficherProposition(listePropositions,[i])
+                score = 0
+                nbPropositionsProposes = 1
+                resultat.textContent = `0`
+                btnValiderMot.disabled = false
+                inputEcriture.disabled = false
+                inputEcriture.value = null
+        })
+    }
 
     let zoneProposition = document.querySelector(".zoneProposition")
     let btnValiderMot = document.getElementById("btnValiderMot")
