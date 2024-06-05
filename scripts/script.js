@@ -22,7 +22,8 @@ function afficherEmail(nom, email, score) {
 function lancerJeu() {
     let score = 0
     let nbPropositionsProposes = 1
-
+    initAddEventListenerPopup()
+    
     let listePropositions = listeMots
     let i = 0
     afficherProposition(listePropositions,[i])
