@@ -8,6 +8,24 @@ function afficherProposition(listePropositions,[i]) {
     zoneProposition.textContent = `${listePropositions[i]}`
 }
 
+function validerNom(nom) {
+    if (nom.length >= 2) {
+        return true
+    }
+    return false
+}
+
+function validerEmail(email) {
+    let emailRegExp = new RegExp(/[\w.-]+@[\w.-]+\.[\w.-]+/) 
+    // "[a-z0-9._-]+@[a-z0-9._-]+\\.[a-z0-9._-]+" (besoin de doubler les \ pour prendre en compte le .)
+    // OU "[\\w.-]+@[\\w.-]+\\.[\\w.-]+" (doubler aussi les \ pour les \w)
+    // OU /[\w.-]+@[\w.-]+\.[\w.-]+/ (remplacer les " " par des / /)
+    if (emailRegExp.test(email)) {
+        return true
+    }
+    return false
+}
+
 /**
  * Cette fonction construit et affiche l'email. 
  * @param {string} nom : le nom du joueur
@@ -21,7 +39,6 @@ function afficherEmail(nom, email, scoreMail) {
 
 function lancerJeu() {
     let score = 0
-    let nbPropositionsProposes = 1
 
     initAddEventListenerPopup()
     let btnEnvoyerMail = document.querySelector(".popup form")
@@ -31,8 +48,12 @@ function lancerJeu() {
         let nom = baliseNom.value
         let baliseEmail = document.getElementById("email")
         let email = baliseEmail.value
-        let scoreMail = `${score} / ${nbPropositionsProposes}`
-        afficherEmail(nom, email, scoreMail)
+        let scoreMail = `${score} / ${i}`
+        if (validerNom(nom) && validerEmail(email)) {
+            afficherEmail(nom, email, scoreMail)
+        } else {
+            console.log(`Erreur : champ(s) invalide(s)`)
+        }
     })
 
     let listePropositions = listeMots
@@ -50,7 +71,6 @@ function lancerJeu() {
                 i = 0
                 afficherProposition(listePropositions,[i])
                 score = 0
-                nbPropositionsProposes = 1
                 resultat.textContent = `0`
                 btnValiderMot.disabled = false
                 inputEcriture.disabled = false
@@ -66,9 +86,8 @@ function lancerJeu() {
         if (inputEcriture.value === listePropositions[i]) {
             score++
         }
-        afficherResultat(score, nbPropositionsProposes)
-        nbPropositionsProposes++
         i++
+        afficherResultat(score, i)
 
         if (listePropositions[i] === undefined) {
             zoneProposition.textContent = `Le jeu est fini`
@@ -85,9 +104,8 @@ function lancerJeu() {
             if (inputEcriture.value === listePropositions[i]) {
                 score++
             }
-            afficherResultat(score, nbPropositionsProposes)
-            nbPropositionsProposes++
             i++
+            afficherResultat(score, i)
     
             if (listePropositions[i] === undefined) {
                 zoneProposition.textContent = `Le jeu est fini`
